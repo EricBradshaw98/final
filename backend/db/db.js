@@ -1,6 +1,8 @@
 const { Pool } = require('pg');
-
 const dbPass = process.env.DB_PASS;
+
+
+
 const pool = new Pool({
   user: 'labber',
   password: dbPass,

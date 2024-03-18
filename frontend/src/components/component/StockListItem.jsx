@@ -1,8 +1,17 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-const StockListItem = ({ stock }) => {
+const StockListItem = ({ stock, onViewDetails, navigateToDetailsPage }) => {
   // Destructuring the stock object
   const { ticker, todaysChangePerc, todaysChange, updated, day, min, prevDay } = stock;
+  const navigate = useNavigate();
+
+  const handleViewDetails = (ticker) => {
+    console.log("Ticker:", ticker);
+    navigateToDetailsPage(ticker, navigate);
+  };
+ 
 
   return (
     <div className="stock-item">
@@ -44,8 +53,15 @@ const StockListItem = ({ stock }) => {
         <p>Volume: {prevDay.v}</p>
         <p>Volume Weighted: ${prevDay.vw.toFixed(2)}</p>
       </div>
+      {/* Button to view details */}
+      <button onClick={() => handleViewDetails(ticker)}>View Details</button>
     </div>
   );
+};
+
+StockListItem.propTypes = {
+  stock: PropTypes.object.isRequired, // Prop validation for stock object
+  onViewDetails: PropTypes.func.isRequired // Prop validation for onViewDetails function
 };
 
 export default StockListItem;
