@@ -15,7 +15,7 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     try {
@@ -24,7 +24,7 @@ const LoginPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: formData.email, password: formData.password}),
+        body: JSON.stringify({ email: formData.email, password: formData.password }),
       });
 
       if (response.ok) {

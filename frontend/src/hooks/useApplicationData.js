@@ -36,7 +36,7 @@ const reducer = (state, action) => {
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [darkMode, setDarkMode] = useState(false);
-  
+
 
   useEffect(() => {
     fetch(url)
@@ -61,12 +61,12 @@ const useApplicationData = () => {
   const navigateToDetailsPage = (ticker, navigate) => {
     console.log("Navigating to details page with ticker:", ticker);
     dispatch({ type: ACTIONS.SET_CURRENT_TICKER, payload: ticker });
-  
+
     // Use navigate passed as an argument
     navigate(`/stock/${ticker}`);
   };
 
- 
+
 
   return {
     state,
