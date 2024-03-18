@@ -17,7 +17,6 @@ import Stock from "./pages/stock";
 import LoginPage from "./pages/login";
 
 function App() {
-  console.log("App.js");
 
   const { state } = useApplicationData();
 

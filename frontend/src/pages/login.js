@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,10 +15,27 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     console.log(formData);
-    
+    try {
+      const response = await fetch('http://localhost:3001/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: formData.email, password: formData.password}),
+      });
+
+      if (response.ok) {
+        setLoggedIn(true);
+      } else {
+        // Handle invalid credentials or other errors
+        console.error('Login failed');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
   };
 
   return (
