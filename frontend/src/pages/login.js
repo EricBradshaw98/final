@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -16,17 +17,20 @@ const LoginPage = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log('pages/login.js handleSubmit')
+    console.log('pages/login.js handleSubmit');
     e.preventDefault();
-
-    console.log(formData);
+  
+    console.log('formDatam', formData);
     axios.post("/users", formData)
       .then(res => {
         console.log(res);
+        // Redirect after successful submission
+        window.location.href = "/watchlist";
       })
       .catch(err => {
         console.log(err);
-      });
+    });
+    
   };
 
   return (

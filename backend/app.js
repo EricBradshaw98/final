@@ -28,16 +28,7 @@ function read(file) {
   });
 }
 
-app.get("/abcde", async (req, res) => {
-  const data = await read("abc.txt");
-  res.send('abcde')
-  // return res.status(200).json({ data });
-});
 
-app.post("/abc", async (req, res) => {
-  console.log(req.body);
-  return res.status(200).json({ success: true });
-});
 //use section
 app.use(logger('dev'));
 app.use(express.json());
