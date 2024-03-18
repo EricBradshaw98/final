@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -18,24 +19,25 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    try {
-      const response = await fetch('http://localhost:3001/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: formData.email, password: formData.password }),
-      });
-
-      if (response.ok) {
-        setLoggedIn(true);
-      } else {
-        // Handle invalid credentials or other errors
-        console.error('Login failed');
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-    }
+    axios.post('http://localhost:3001/login', {email: formData.email, password: formData.password}).then(res => console.log(res)).catch(error => console.error(error)); 
+    // try {
+    //   const response = await fetch('http://localhost:3001/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: { email: formData.email, password: formData.password }
+    //   });
+    //   console.log('response', response)
+    //   if (response.ok) {
+    //     setLoggedIn(true);
+    //   } else {
+    //     // Handle invalid credentials or other errors
+    //     console.error('Login failed');
+    //   }
+    // } catch (error) {
+    //   console.error('Error logging in:', error);
+    // }
   };
 
   return (

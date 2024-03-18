@@ -8,6 +8,7 @@ const port = 3001;
 
 app.use(cors({ origin: 'http://localhost:3000' })); // Correct placement
 app.use(bodyParser.json());
+// app.use(express.json());
 
 const pool = new Pool({
   user: 'labber',
@@ -17,24 +18,30 @@ const pool = new Pool({
   port: 5432,
 });
 
+console.log('abc')
 app.use(bodyParser.json());
 
 // Login endpoint
-app.post('/api/login', async (req, res) => {
+app.post('/', async (req, res) => {
   if (1 === 1) {
     console.log('/api/login');
   }
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   console.log(req.body);
-  if (!req.body.username || !req.body.password) {
+  if (!email || !password) {
     return res.status(400).json({ success: false, message: 'Username and password are required' });
   }
+  // const query = {
+  //   text: 'SELECT * FROM users WHERE email = $1 AND password = $2',
+  //   values: [email, password],
+  // };
+  // console.log('query', query);
 
   // Check username and password against your mock users in PostgreSQL
   // Perform authentication logic here
 
   // For demonstration, let's assume username and password match
-  if (username === 'mockuser' && password === 'mockpassword') {
+  if (email === 'mockuser' && password === 'mockpassword') {
     res.json({ success: true });
   } else {
     res.status(401).json({ success: false, message: 'Invalid credentials' });
@@ -48,6 +55,6 @@ app.get('/api/checkLoggedIn', (req, res) => {
   res.json({ loggedIn: true });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });

@@ -8,6 +8,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const watchlistsRouter = require('./routes/watchlists');
 const stocksRouter = require('./routes/stocks');
+const loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -34,11 +35,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/watchlists', watchlistsRouter);
 app.use('/stocks', stocksRouter);
+app.use('/login', loginRouter);
 
 
 
-module.exports = app;
+
