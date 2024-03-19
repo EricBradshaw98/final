@@ -19,6 +19,5 @@
   "homepage": "https://github.com/EricBradshaw98/final#readme",
   "dependencies": {
     "react-scripts": "^4.0.3"
-  },
-  "proxy": "http://localhost:3001"
+  }
 }

@@ -10,7 +10,7 @@ import useApplicationData from './hooks/useApplicationData';
 import Home from "./pages";
 import About from "./pages/about";
 import Blogs from "./pages/blogs";
-import SignUp from "./pages/signup";
+import Register from "./pages/register";
 import Contact from "./pages/contact";
 import Homepage from "./pages/homepage";
 import Watchlist from "./pages/watchlist";
@@ -43,7 +43,7 @@ function App() {
         <Route path="/stock/:ticker" element={<StockListDetailsItem stocks={state.stockData} tickerCurrent={state.tickerCurrent} navigateToDetailsPage={navigateToDetailsPage}
    />} />
         
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Router>

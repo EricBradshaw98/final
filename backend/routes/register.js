@@ -3,11 +3,23 @@ const { getUserByEmail } = require('../db/queries/userQueries');
 const register = express.Router();
 const bcrypt = require("bcrypt");
 const pool = require("../db/db");
-const postman = require('postman');
+// const cors = require('cors');
 
+// Apply CORS globally
+// register.use(cors());
+
+register.get('/', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM users');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 // register endpoint
-register.post("/register", async (request, response) => {
+register.post("/", async (request, response) => {
   console.log('register.post')
   try {
     // hash the password
@@ -36,3 +48,4 @@ register.post("/register", async (request, response) => {
   }
 });
 
+module.exports = register;

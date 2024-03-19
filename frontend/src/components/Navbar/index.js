@@ -24,7 +24,7 @@ const Navbar = () => {
                     <NavLink to="/stock" activeStyle>
                         Stock
                     </NavLink>
-                    <NavLink to="/sign-up" activeStyle>
+                    <NavLink to="/register" activeStyle>
                         Sign Up
                     </NavLink>
                     <NavLink to="/login" activeStyle>
