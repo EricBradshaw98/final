@@ -5,7 +5,9 @@ import useChart from '../../hooks/useChart';
 import useStatement from '../../hooks/useStatement';
 import Chart from "react-apexcharts";
 import moment from "moment";
-const StockListDetailsItem = ({ tickerCurrent }) => {
+
+const StockListDetailsItem = ({ tickerCurrent, navigateToDetailsPage,
+  addtoWatchList }) => {
   const [multiplier, setMultiplier] = useState(1);
   const [timespan, setTimespan] = useState('day');
   const [start, setStart] = useState('2024-01-01');
@@ -41,6 +43,11 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
     setMultiplier(event.target.value);
   };
 
+  const handleAddToWatchlist = (ticker) => {
+    console.log("Add to Watchlist:", ticker);
+    addtoWatchList(tickerCurrent);
+  };
+
   const handleTimespanChange = (event) => {
     setTimespan(event.target.value);
   };
@@ -71,14 +78,17 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
   }, [data2]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (loading2) return <div>Loading Chart...</div>;
-  if (error2) return <div>Error Loading Chart: {error.message}</div>;
-  if (loading3) return <div>Loading Financials...</div>;
-  if (error3) return <div>Error Loading Financials: {error.message}</div>;
+if (error) return <div>Error: {error.message}</div>;
+if (loading2) return <div>Loading Chart...</div>;
+if (error2) return <div>Error Loading Chart: {error.message}</div>;
+if (loading3) return <div>Loading Financials...</div>;
+if (error3) return <div>Error Loading Financials: {error.message}</div>;
 
-  const companyInfo = data.results;
-  const financeInfo = data3.results;
+const companyInfo = data && data.results; // Check if data is defined before accessing its properties
+const financeInfo = data3 && data3.results; // Check if data3 is defined before accessing its properties
+
+
+ 
   console.log("financeinfo", financeInfo);
 
   return (
@@ -102,6 +112,7 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
             <option value="month">Month</option>
             <option value="quarter">Quarter</option>
             <option value="year">Year</option>
+            
           </select>
 
           <label>Start:</label>
@@ -109,6 +120,7 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
 
           <label>End:</label>
           <input type="date" value={end} onChange={handleEndChange} />
+          <button onClick={() =>  handleAddToWatchlist()}>Add to Watchlist</button>
         </div></div>
 
       <h1>Company Information</h1>

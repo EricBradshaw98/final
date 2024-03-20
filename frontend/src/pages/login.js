@@ -157,7 +157,7 @@ const LoginPage = (props) => {
   } else {
     return <div>
       <h2>Manage Your Account</h2>
-      <button onClick={handleLogout}>Log Out</button>
+      
       <div>
         <h3>Change Email</h3>
         <input

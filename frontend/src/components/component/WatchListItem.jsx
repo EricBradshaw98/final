@@ -25,7 +25,9 @@ const WatchListItem = ({ symbol, navigateToDetailsPage, addtoWatchList }) => {
   const handleAddToWatchlist = () => {
     console.log("Add to Watchlist:", symbol);
     addtoWatchList(symbol);
+    window.location.reload();
   };
+  
 
   if (!symbol) {
     return <div>You have no stocks in your watchlist</div>;
