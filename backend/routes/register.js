@@ -46,12 +46,21 @@ register.delete("/", async (request, response) => {
     console.log("Deleting user with ID:", id);
     // Remove entries from the watchlists table associated with the user
     const removeWatchlistEntriesQuery = `
-  DELETE FROM watchlists
-  WHERE user_id = $1
-  RETURNING *
-`;
+      DELETE FROM watchlists
+      WHERE user_id = $1
+      RETURNING *
+    `;
     const removedWatchlistResult = await query(removeWatchlistEntriesQuery, [id]);
     console.log("Removed watchlist entries:", removedWatchlistResult.rowCount);
+
+    // Remove the user from the users table
+    const removeUserQuery = `
+      DELETE FROM users 
+      WHERE id = $1
+      RETURNING *
+    `;
+    const removedUserResult = await query(removeUserQuery, [id]);
+    console.log("Removed user:", removedUserResult.rows);
 
     // Return the removed user data
     response.json({
@@ -62,31 +71,8 @@ register.delete("/", async (request, response) => {
     console.error("Error deleting:", error);
     response.status(500).send("Error removing user");
   }
-  // Check if the user exists
-  const checkExistingUserQuery = `
-        SELECT * FROM users 
-        WHERE id = $1
-      `;
-  const existingUserResult = await query(checkExistingUserQuery, [id]);
-  console.log("Existing user:", existingUserResult.rows);
-
-  // If the user does not exist, return a message
-  if (existingUserResult.rows.length === 0) {
-    console.log("User not found.");
-    return response.status(404).json({ error: "User not found." });
-  }
-
-  // Remove the user from the users table
-  const removeUserQuery = `
-        DELETE FROM users 
-        WHERE id = $1
-        RETURNING *
-      `;
-  const removedUserResult = await query(removeUserQuery, [id]);
-  console.log("Removed user:", removedUserResult.rows);
-
-
 });
+
 
 
 

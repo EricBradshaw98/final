@@ -75,7 +75,25 @@ const LoginPage = (props) => {
   const handleDelete = async () => {
     try {
       const user_id = cookies.get("user_id");
-      console.log("User ID:", user_id);
+      console.log("User ID from cookie:", user_id);
+  
+      // Check if user_id is null or undefined
+      if (!user_id) {
+        alert("User ID not found. Please log in again.");
+        return;
+      }
+  
+      // Convert user_id and newId to strings for strict comparison
+      const userIdString = user_id.toString();
+      const inputIdString = newId.toString();
+  
+      // Check if the inputted ID matches the user ID from the cookie
+      if (userIdString !== inputIdString) {
+        alert("The inputted ID does not match the user ID. Please try again.");
+        return;
+      }
+  
+      console.log("Deleting user with ID:", user_id);
       // Make an HTTP request to delete the user account
       const response = await axios.delete("http://localhost:3001/register", {
         data: { id: user_id } // Include the user ID in the request body
@@ -85,10 +103,10 @@ const LoginPage = (props) => {
       handleLogout(); // Log out the user after deleting the account
     } catch (error) {
       console.error("Error deleting user:", error);
-      alert("Please remove your watchlist entries before deleting your account.");
+      alert("An error occurred while deleting the user account. Please try again later.");
     }
   };
-
+  
 
 
 
