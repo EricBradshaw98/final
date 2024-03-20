@@ -29,6 +29,7 @@ const LoginPage = (props) => {
 
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [newId, setNewId] = useState("");
 
   const handleLogout = () => {
     // Dispatch an action to reset the login state
@@ -71,6 +72,22 @@ const LoginPage = (props) => {
   };
 
 
+  const handleDelete = async () => {
+    try {
+      const user_id = cookies.get("user_id");
+      console.log("User ID:", user_id);
+      // Make an HTTP request to delete the user account
+      const response = await axios.delete("http://localhost:3001/register", {
+        data: { id: user_id } // Include the user ID in the request body
+      });
+      console.log(response.data);
+      alert("User deleted successfully!");
+      handleLogout(); // Log out the user after deleting the account
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Please remove your watchlist entries before deleting your account.");
+    }
+  };
 
 
 
@@ -82,8 +99,10 @@ const LoginPage = (props) => {
 
 
 
+
+  const user_email = cookies.get("email");
   const user_id = cookies.get("user_id");
-  console.log("User ID:", user_id);
+ 
 
   // Conditionally render based on login state
   if (!user_id) {
@@ -140,6 +159,17 @@ const LoginPage = (props) => {
           placeholder="Enter new password"
         />
         <button onClick={handleChangePassword}>Change Password</button>
+      </div>
+
+      <div>
+        <h3>Delete Account {user_id} - {user_email}</h3>
+        <input
+  type="text"
+  value={newId}
+  onChange={(e) => setNewId(e.target.value)}
+  placeholder="Input account ID to delete your account"
+/>
+        <button onClick={handleDelete}>Delete Account</button>
       </div>
     </div>;
   }
