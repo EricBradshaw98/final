@@ -70,18 +70,6 @@ const LoginPage = (props) => {
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
   const user_id = cookies.get("user_id");
   console.log("User ID:", user_id);
 
