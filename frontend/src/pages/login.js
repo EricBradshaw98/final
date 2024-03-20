@@ -116,7 +116,7 @@ const LoginPage = (props) => {
         <button type="submit">Login</button>
       </form>
     );
-  } else {
+  } if(user_id) {
     return <div>
       <h2>Manage Your Account</h2>
       <button onClick={handleLogout}>Log Out</button>

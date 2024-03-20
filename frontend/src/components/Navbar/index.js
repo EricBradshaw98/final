@@ -42,7 +42,7 @@ return (
               </NavLink>
               {user_id ? (
                   <>
-                      <NavLink to="/manage-account" activeStyle>
+                      <NavLink to="/login" activeStyle>
                           Manage your Account
                       </NavLink>
                       <button onClick={handleLogout}>Logout</button>
