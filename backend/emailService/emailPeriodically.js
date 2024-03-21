@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const cron = require('node-cron');
 const { Pool } = require('pg');
+const auth = require('../auth');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -9,7 +10,6 @@ require('dotenv').config();
 // Initialize Express app
 const app = express();
 
-// Initialize PostgreSQL pool
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -18,30 +18,33 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// Fetch existing users from the database
-async function getUsers() {
-  try {
-    const query = 'SELECT email FROM users;';
-    const { rows } = await pool.query(query);
-    return rows.map(row => row.email);
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    return [];
-  }
-}
-
 // Send emails to users
-async function sendWeeklyEmails() {
-  const users = await getUsers();
 
+async function sendWeeklyEmails() {
+  console.log('Sending weekly emails...');
+  const users = await getUsers();
+  // Initialize PostgreSQL pool
+  // Fetch existing users from the database
+  async function getUsers() {
+    try {
+      const query = 'SELECT email FROM users;';
+      const { rows } = await pool.query(query);
+      return rows.map(row => row.email);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      return [];
+    }
+  }
+  
   // Configure nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: 'junjetms@yahoo.ca',
+      pass: 'M$mor8425',
     },
   });
+  console.log('transporter', transporter)
 
   // Email content
   const mailOptions = {
@@ -64,13 +67,10 @@ async function sendWeeklyEmails() {
 }
 
 // Schedule weekly email sending
-cron.schedule('*/60 * * * * *', () => {
-  console.log('Sending weekly emails...');
-  sendWeeklyEmails();
-});
+cron.schedule('*/60 * * * * *', sendWeeklyEmails);
 
-// Start the server
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Export function to send emails
+module.exports = {
+  sendWeeklyEmails
+};
+

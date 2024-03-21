@@ -15,6 +15,7 @@ const stocksRouter = require('./routes/stocks');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const app = express();
+const { sendWeeklyEmails } = require('./emailService/emailPeriodically');
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 
@@ -60,6 +61,6 @@ app.use('/stocks', stocksRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 
-
+sendWeeklyEmails();
 
 module.exports = app;
