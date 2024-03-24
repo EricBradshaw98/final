@@ -6,28 +6,27 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const cookies = new Cookies();
 
+export const plans = [
+  {
+    id: "Monthly",
+    planName: 'Monthly Plan',
+    price: 19.99,
+    billingCycle: 'month',
+    description: 'This is a great plan for getting started.'
+  },
+  {
+    id: "Yearly",
+    planName: 'Yearly Plan',
+    price: 199.99,
+    billingCycle: 'year',
+    description: 'This is a great plan for saving money.'
+  }
+];
+
 const Plans = () => {
   const user_id = cookies.get("user_id");
   const navigate = useNavigate(); // Get the navigate function
   
-  const plans = [
-    {
-      id: "Monthly",
-      planName: 'Monthly Plan',
-      price: 19.99,
-      billingCycle: 'month',
-      description: 'This is a great plan for getting started.'
-    },
-    {
-      id: "Yearly",
-      planName: 'Yearly Plan',
-      price: 199.99,
-      billingCycle: 'year',
-      description: 'This is a great plan for saving money.'
-    }
-  ];
-
-  // Define the handlePlanSelection function using useCallback to prevent unnecessary re-renders
   const handlePlanSelection = useCallback(async (userId, planName) => {
     console.log('User ID:', userId, 'Plan Name:', planName);
     try {
