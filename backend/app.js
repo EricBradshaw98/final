@@ -18,6 +18,7 @@ const apiRouter = require('./routes/api');
 const indicesRouter = require('./routes/indices');
 const blogsRouter = require('./routes/blogs');
 const plansRouter = require('./routes/plans');
+const checkoutRouter = require('./routes/checkout');
 const app = express();
 
 app.use(cors({ origin: 'http://localhost:3000' }));
@@ -56,5 +57,6 @@ app.use('/api', apiRouter);
 app.use('/indices', indicesRouter);
 app.use('/blogs', blogsRouter);
 app.use('/plans', plansRouter);
+app.use('/checkout', checkoutRouter);
 
 module.exports = app;

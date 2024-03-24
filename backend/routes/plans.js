@@ -19,9 +19,11 @@ plans.post("/", async (req, res) => {
     const values = [planName, userId];
     const result = await query(queryText, values);
 
+    // Redirect to frontend route
     res.status(201).json({
       success: true,
       message: 'Plan added successfully',
+      redirectUrl: '/checkout', // Specify the URL of the Checkout.js component
       post: result.rows[0],
     });
   } catch (error) {
@@ -33,5 +35,6 @@ plans.post("/", async (req, res) => {
     });
   }
 });
+
 
 module.exports = plans;

@@ -20,6 +20,7 @@ import StockListDetailsItem from "./components/component/StockListDetailsItem";
 import AboutUsItem from "./components/component/aboutUsItem";
 import AboutUs from "./pages/test";
 import Blog from "./components/component/blogcomponents/Blog";
+import Checkout from "./components/paymentComponent/Checkout";
 import "./styles/app.scss";
 
 function App() {
@@ -99,6 +100,7 @@ function App() {
             />
           }
         />
+        <Route path="/checkout" element={<Checkout />} />
 
         
       </Routes>

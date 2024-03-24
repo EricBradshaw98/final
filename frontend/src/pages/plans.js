@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "../styles/plans.scss";
 import Cookies from "universal-cookie";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const cookies = new Cookies();
 
 const Plans = () => {
   const user_id = cookies.get("user_id");
- 
+  const navigate = useNavigate(); // Get the navigate function
+  
   const plans = [
     {
       id: "Monthly",
@@ -25,7 +27,8 @@ const Plans = () => {
     }
   ];
 
-  const handlePlanSelection = async (userId, planName) => {
+  // Define the handlePlanSelection function using useCallback to prevent unnecessary re-renders
+  const handlePlanSelection = useCallback(async (userId, planName) => {
     console.log('User ID:', userId, 'Plan Name:', planName);
     try {
       const response = await axios.post('/plans', {
@@ -34,12 +37,15 @@ const Plans = () => {
       });
   
       console.log('Plan added successfully:', response.data);
+
+      navigate('/checkout');
+
       return response.data;
     } catch (error) {
       console.error('Error adding plan:', error);
       throw error;
     }
-  };
+  }, [navigate]); // Ensure navigate is included in the dependency array
 
   return (
     <div className="body-wrapper subscription-plans-container" >

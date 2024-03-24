@@ -30,6 +30,10 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 import ToggleColorMode from './ToggleColorMode';
 
+import axios from "axios";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
 function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
   return (
     <Box
