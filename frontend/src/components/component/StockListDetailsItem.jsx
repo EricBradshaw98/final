@@ -93,7 +93,7 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
   // Continue with rendering if data.results is defined
   const companyInfo = data.results;
   const financeInfo = data3.results;
-  
+
 
   return (
 
@@ -126,16 +126,15 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
 
               <label>Start:</label>
               <input type="date" value={start} onChange={handleStartChange} />
-
               <label>End:</label>
               <input type="date" value={end} onChange={handleEndChange} />
+
             </div>
-<button>Add to Watchlist</button>
+
           </div>
 
           <div className='company-details'>
             <li>
-
               {companyInfo.name && <li><strong>Stock:</strong> {companyInfo.name} ({companyInfo.ticker})</li>}
               {companyInfo.market && <li><strong>Market:</strong> {companyInfo.market}</li>}
               {companyInfo.locale && <li><strong>Locale:</strong> {companyInfo.locale}</li>}
@@ -150,8 +149,6 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
               {companyInfo.sic_code && <li><strong>SIC Code:</strong> {companyInfo.sic_code}</li>}
               {companyInfo.sic_description && <li><strong>SIC Description:</strong> {companyInfo.sic_description}</li>}
               {companyInfo.list_date && <li><strong>List Date:</strong> {companyInfo.list_date}</li>}
-
-
             </li>
           </div>
         </div>
@@ -186,57 +183,56 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
           </div>
         </div>
 
-
         {data3 && data3.results && (
-        <div className='financials-container'>
-          <div className="financials">
-            <h3>Financial Information</h3>
-            <select value={selectedItemId} onChange={handleChange}>
-              <option value="">Select Item</option>
-              {data3 && data3.results && data3.results.map((item, index) => (
-                <option key={index} value={item.id}>{item.id}</option>
-              ))}
-            </select>
+          <div className='financials-container'>
+            <div className="financials">
+              <h3>Financial Information</h3>
+              <select value={selectedItemId} onChange={handleChange}>
+                <option value="">Select Item</option>
+                {data3 && data3.results && data3.results.map((item, index) => (
+                  <option key={index} value={item.id}>{item.id}</option>
+                ))}
+              </select>
 
-            <select value={selectedFinancialCategory} onChange={handleChangeFinancialCategory}>
-              <option value="">Select Financial Category</option>
-              {selectedItemId && data3 && data3.results && data3.results.find(item => item.id === selectedItemId) &&
-                Object.keys(data3.results.find(item => item.id === selectedItemId).financials || {}).map(category => (
-                  Object.keys(data3.results.find(item => item.id === selectedItemId).financials[category]).map((subCategory, index) => (
-                    <option key={index} value={`${category}.${subCategory}`}>{data3.results.find(item => item.id === selectedItemId).financials[category][subCategory].label}</option>
+              <select value={selectedFinancialCategory} onChange={handleChangeFinancialCategory}>
+                <option value="">Select Financial Category</option>
+                {selectedItemId && data3 && data3.results && data3.results.find(item => item.id === selectedItemId) &&
+                  Object.keys(data3.results.find(item => item.id === selectedItemId).financials || {}).map(category => (
+                    Object.keys(data3.results.find(item => item.id === selectedItemId).financials[category]).map((subCategory, index) => (
+                      <option key={index} value={`${category}.${subCategory}`}>{data3.results.find(item => item.id === selectedItemId).financials[category][subCategory].label}</option>
+                    ))
                   ))
-                ))
-              }
-            </select>
-            
-            <ul>
-              {selectedItemId && data3 && data3.results && data3.results.map((item, index) => (
-                item.id === selectedItemId && (
-                  <li key={index}>
-                    <div className='finance-list-item'>
-                      <strong>ID: </strong> {item.id}<br />
-                      <strong>Start Date: </strong> {item.start_date}<br />
-                      <strong>End Date: </strong> {item.end_date}<br />
+                }
+              </select>
+
+              <ul>
+                {selectedItemId && data3 && data3.results && data3.results.map((item, index) => (
+                  item.id === selectedItemId && (
+                    <li key={index}>
+                      <div className='finance-list-item'>
+                        <strong>ID: </strong> {item.id}<br />
+                        <strong>Start Date: </strong> {item.start_date}<br />
+                        <strong>End Date: </strong> {item.end_date}<br />
 
 
-                      {selectedFinancialCategory && item.financials[selectedFinancialCategory.split('.')[0]] && item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]] && (
-                        <>
-                          <strong>{selectedFinancialCategory.replace('_', ' ').replace('.', ': ')}: </strong>
-                          {item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].unit === 'USD' &&
-                            `$`}
-                          {item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].value}
-                          {item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].unit && ` ${item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].unit}`}
-                          <br /><br />
-                        </>
-                      )}
-                    </div>
-                    {/* Add other properties as needed */}
-                  </li>
-                )
-              ))}
-            </ul>
+                        {selectedFinancialCategory && item.financials[selectedFinancialCategory.split('.')[0]] && item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]] && (
+                          <>
+                            <strong>{selectedFinancialCategory.replace('_', ' ').replace('.', ': ')}: </strong>
+                            {item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].unit === 'USD' &&
+                              `$`}
+                            {item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].value}
+                            {item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].unit && ` ${item.financials[selectedFinancialCategory.split('.')[0]][selectedFinancialCategory.split('.')[1]].unit}`}
+                            <br /><br />
+                          </>
+                        )}
+                      </div>
+                      {/* Add other properties as needed */}
+                    </li>
+                  )
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
         )}
       </div>
     </div>
@@ -246,8 +242,5 @@ const StockListDetailsItem = ({ tickerCurrent }) => {
 StockListDetailsItem.propTypes = {
   tickerCurrent: PropTypes.string.isRequired,
 };
-
-
-
 
 export default StockListDetailsItem;

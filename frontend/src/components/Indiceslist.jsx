@@ -12,6 +12,7 @@ const Indiceslist = () => {
       try {
         const response = await axios.get("/indices");
         setIndicesData(response.data);
+        console.log('response.data', response.data)
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -22,7 +23,7 @@ const Indiceslist = () => {
     fetchData();
   }, []);
   
-
+  console.log()
   return (
     <div className="indices">
       <div className="indices-title">

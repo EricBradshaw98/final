@@ -40,10 +40,10 @@ indices.get('/', async (req, res) => {
 
    
 
-
+    console.log('compData', compData)
     res.json({ compData });
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching compData:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
