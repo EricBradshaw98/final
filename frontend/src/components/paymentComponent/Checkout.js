@@ -31,6 +31,10 @@ import Review from './Review';
 import ToggleColorMode from './ToggleColorMode';
 
 import axios from "axios";
+import { plans } from "../../pages/plans";
+import { useState } from "react";
+import { useLocation } from 'react-router-dom';
+import stockLogo from '../../assets/stocklogo.png';
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -99,12 +103,16 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+export default function Checkout(props) {
+  const location = useLocation(); // Get the location object
+  const selectedPlan = location.state ? location.state.selectedPlan : null;
   const [mode, setMode] = React.useState('light');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
+
+
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
@@ -121,6 +129,7 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
 
   return (
     <ThemeProvider theme={showCustomTheme ? checkoutTheme : defaultTheme}>
@@ -157,13 +166,7 @@ export default function Checkout() {
               sx={{ ml: '-8px' }}
             >
               Back to
-              <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
-                style={logoStyle}
-                alt="Sitemark's logo"
-              />
+              <img src={stockLogo} style={logoStyle} alt="Sitemark's logo" />
             </Button>
           </Box>
           <Box
@@ -175,7 +178,7 @@ export default function Checkout() {
               maxWidth: 500,
             }}
           >
-            <Info totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
+            <Info totalPrice={selectedPlan ? `$${selectedPlan.price.toFixed(2)} / ${selectedPlan.billingCycle}` : 'Select a plan'} />
           </Box>
         </Grid>
         <Grid
