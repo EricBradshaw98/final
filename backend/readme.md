@@ -6,3 +6,5 @@ DB_PORT = 5432
 
 create .env file and add this
 change password as needed
+##
+npm run db:reset
